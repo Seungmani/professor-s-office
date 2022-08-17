@@ -1,0 +1,162 @@
+ul,li {
+    list-style : none;
+}
+
+a{
+    text-decoration: none;
+}
+
+*{
+    padding: 0;
+    margin: 0;
+}
+
+/*header*/
+header {
+    z-index: 1;
+    position: fixed;
+    top: 10px;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    
+}
+
+header .head{
+    position: relative;
+    width : 80%;
+    height : 60px;
+    margin: 0 auto;
+}
+
+header .head .title{
+    display : inline-block;
+}
+
+header .head img{
+    position : absolute;
+    top : 0px;
+    height : 60px;
+    width : 60px;
+    opacity: 1;
+}
+
+header .head .title{
+    text-decoration: none;
+    position : absolute;
+    left : 65px;
+    font-size : 25px;
+    color : #fff;
+    line-height : 60px;
+}
+
+header .head .bar{
+    box-sizing : border-box;
+    float : right;
+    margin :0;
+    padding : 0;
+    height: 60px;
+    margin-right: 20px;
+}
+
+header .head li {
+    color : #fff;
+    font-size: 20px;
+    float : left;
+    margin-right: 20px;
+    line-height: 60px;
+    cursor: pointer;
+}
+
+header .head li:last-child{
+    margin-right: 0;
+}
+
+/* 배경화면 */
+body{
+    height: 100vh;
+    background : url(./배경화면.jfif) no-repeat center center;
+    background-size : cover;
+}
+
+/* 글 */
+.text-box{
+    position: absolute;
+    top  : 200px;
+    width: 100%;
+    height: 300px;
+    z-index: 1;
+    margin-bottom: 20px;
+}
+
+.text-box .text{
+    box-sizing: border-box;
+    vertical-align: middle;
+    text-align: center;
+    color: white;
+    width : 50%;
+    margin : 0 auto;
+    line-height: 40px;
+}
+
+.text-box .text h2{
+    margin-top: 20px;
+    font-size: 70px;
+}
+
+.text-box .text p{
+    margin-top: 30px;
+    line-height: 43px;
+    font-size: 30px;
+}
+
+/* 버튼 */
+.bt-wrap{
+    position: absolute;
+    top : 500px;
+    width: 100%;
+    height: 50px;
+}
+
+.bt-wrap .bt{
+    margin: 0 auto;
+    text-align: center;
+}
+
+.svg-wrapper {
+    margin-top: 0;
+    position: relative;
+    width: 150px;
+    height: 50px;
+    display: inline-block;
+    border-radius: 3px;
+    margin-left: 5px;
+    margin-right: 5px
+}
+
+.shape {
+    stroke-width: 6px;
+    fill: transparent;
+    stroke: #009FFD;
+    stroke-dasharray: 85 250; 
+    stroke-dashoffset: -223; /*-220지점부터 시작*/
+    transition: 1s all ease; /* ease : 기본값으로, 전환(transition) 효과가 천천히 시작되어, 그다음에는 빨라지고, 마지막에는 다시 느려집니다.*/
+}
+  
+.bt .text {
+    margin-top: -35px;
+}
+
+.bt .text a {
+    color: white;
+    text-decoration: none;
+    font-weight: 100;
+    font-size: 1.1em;
+}
+
+.svg-wrapper:hover .shape {
+    stroke-dasharray: 50 0;
+    stroke-width: 3px;
+    stroke-dashoffset: 0;
+    stroke: #06D6A0;
+}

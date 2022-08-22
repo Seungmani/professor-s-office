@@ -1,13 +1,11 @@
 function dis(){
-    if($('.bar').css('display') == 'none'){
-        $('.bar').show();
-        $('.nav_button').animate({
-            right : '10px'
+    if($('.nav_bar').css('right') != '0px'){
+        $('.nav_bar').animate({
+            right : '0px'
         })
     }else{
-        $('.bar').hide();
-        $('.nav_button').animate({
-            right : '130px'
+        $('.nav_bar').animate({
+            right : '-300px'
         })
     }
 }

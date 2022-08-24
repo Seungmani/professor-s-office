@@ -5,7 +5,7 @@ function dis(){
         })
     }else{
         $('.nav_bar').animate({
-            right : '-300px'
+            right : '-500px'
         })
     }
 }

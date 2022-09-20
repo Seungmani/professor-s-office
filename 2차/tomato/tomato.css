@@ -85,8 +85,7 @@ header .head li a{
     color : #000;
 }
 
-/*head*/
-
+/*main*/
 .container{
     position: relative;
     width: 100%;
@@ -181,31 +180,45 @@ header .head li a{
     stroke: #06D6A0;
 }
 
-/*modal*/
-.modal-content{
-    width : 100px;
-    height: 300px;
-}
-
-.modal-content form{
-    width : 80%;
-    height: 150px;
-    background-color: #009FFD;
-    margin: auto;
-    box-sizing: border-box;
+/*modal form*/
+.modal-body form{
     position: relative;
+    box-sizing: border-box;
+    height : 300px;
 }
 
-form .file{
-    position: absolute;
-    top : 10px;
-    left : 50%;
-    transform: translateX(-25%);
+form .filebox{
+    width : 100%;
+    margin-left: 20px;
 }
 
-form .submit{
+.filebox .upload-name {
+    display: inline-block;
+    height: 40px;
+    padding: 0 10px;
+    vertical-align: middle;
+    border: 1px solid #dddddd;
+    width: 70%;
+    color: #999999;
+}
+
+.filebox label {
+    display: inline-block;
+    padding: 7px 15px;
+    color: #fff;
+    vertical-align: middle;
+    background-color: #999999;
+    cursor: pointer;
+    height: 40px;
+    margin-left: 10px;
+}
+
+.filebox input[type="file"] {
+    /*기존 파일 css 제거*/
     position: absolute;
-    top: 60px;
-    left : 50%;
-    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
 }

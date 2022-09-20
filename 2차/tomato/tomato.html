@@ -15,8 +15,8 @@
     <body>
       <header>
         <div class="head">
-          <img src="./전남대마크.png" alt="">
-            <a href="./main.html" class="title">
+          <img src="../img/전남대마크.png" alt="">
+            <a href="../main/main.html" class="title">
               HELLO
             </a>
           <p> 스마트팜 빅데이터 분석 서비스 </p>
@@ -32,7 +32,7 @@
         <h1>토마토</h1>
         <p>설명</p>
 
-        <img src="./tomato.webp" alt="토마토사진">
+        <img src="../img/tomato-ex.webp" alt="토마토사진">
 
         <div class="bt-wrap">
           <div class="bt">
@@ -40,7 +40,7 @@
               <svg height="40" width="150" xmlns="http://www.w3.org/2000/svg">
                 <rect class="shape" height="40" width="150" />
                   <div class="text">
-                    <a href="./ex.html" data-bs-toggle="modal" data-bs-target="#exampleModal">Button</a>
+                    <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal">Button</a>
                   </div>
               </svg>
             </div>
@@ -51,17 +51,29 @@
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
-              <form action="./index.html" method="POST" enctype="multipart/form-data">
-                <input type='file' class="file" id='uploadedFile' name='uploadedFile'>
-                <input type="submit" class="submit" id="file_button" name="file_button">
-              </form>
+              <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form action="#" method="POST" enctype="multipart/form-data">
+                  <div class="filebox">
+                    <input class="upload-name" value="첨부파일" placeholder="첨부파일" id='uploadedFile' name='uploadedFile'>
+                    <label for="file">파일찾기</label> 
+                    <input type="file" id="file">
+                  </div>
+                  <input type="submit" class="submit" id="file_button" name="file_button">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </form>
+              </div>
             </div>
           </div>
         </div>       
       </div>
 
-      <script src="../../../jquery-1.12.4.min.js"></script>
+
+      <script src="../js/tomato.js"></script>
+      <script src="../js/jquery-1.12.4.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
-      <script src="./tomato.js"></script>
     </body>
 </html>

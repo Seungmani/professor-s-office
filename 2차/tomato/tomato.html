@@ -58,17 +58,26 @@
               <div class="modal-body">
                 <form action="#" method="POST" enctype="multipart/form-data">
                   <div class="filebox">
+                    <div class="select">
+                      <input type="radio" name="ex" value="생육" id="생육">생육
+                      <input type="radio" name="ex" value="환경" id="환경">환경
+                    </div>
+
                     <input class="upload-name" value="첨부파일" placeholder="첨부파일" id='uploadedFile' name='uploadedFile'>
                     <label for="file">파일찾기</label> 
                     <input type="file" id="file">
                   </div>
-                  <input type="submit" class="submit" id="file_button" name="file_button">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                  <div class="subOrclo">
+                    <input type="submit" class="submit" id="file_button" name="file_button">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  </div>
                 </form>
               </div>
             </div>
           </div>
-        </div>       
+        </div>    
+           
       </div>
 
 

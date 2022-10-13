@@ -192,7 +192,15 @@ form .filebox{
     margin-left: 20px;
 }
 
-.filebox .upload-name {
+.filebox .select{
+    margin-top :30px;
+    width : 80%;
+    float: left;
+    height: 30px;
+}
+
+.filebox .upload-name { /*검색 창*/
+    margin-top: 30px;
     display: inline-block;
     height: 40px;
     padding: 0 10px;
@@ -202,7 +210,8 @@ form .filebox{
     color: #999999;
 }
 
-.filebox label {
+.filebox label{
+    margin-top: 30px;
     display: inline-block;
     padding: 7px 15px;
     color: #fff;
@@ -221,4 +230,11 @@ form .filebox{
     padding: 0;
     overflow: hidden;
     border: 0;
+}
+
+form .subOrclo{
+    width : 100%;
+    height: 80px;
+    text-align: center;
+    margin-top: 30px;
 }

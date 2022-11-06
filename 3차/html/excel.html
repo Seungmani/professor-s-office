@@ -4,20 +4,19 @@
     <script src="https://jsuites.net/v4/jsuites.js"></script>
     <link rel="stylesheet" href="https://jsuites.net/v4/jsuites.css" type="text/css" />
     
-    <div id="spreadsheet1"></div>
-    <p><button id='download'>Export my spreadsheet as CSV</button></p>
+    <div id="spreadsheet1"></div>  <!-- 파일 그려지는 부분 -->
 
+    <input type="file" id="fileUploader" name="fileUploader" accept=".xls, .xlsx">
+    <p><button id='download' onclick="down()">Export my spreadsheet as CSV</button></p>
+    
+    <label id="jsonObject" style="display: none;"></label>
 
-    <input type="file" id="fileUploader" name="fileUploader" accept=".xls, .xlsx" style="display:none;"/>
-    <input type='button' value='Load a XLSX file from my local computer' onclick="document.getElementById('fileUploader').click()">
-    </br></br>
-    JSON : <label id="jsonObject"> </label>
-
-    <script src="../../../../js-library/execl/xlsx.full.min.js"></script>
-    <script src="../../../../js-library/jquery-1.12.4.min.js"></script>
+    <script src="../js/xlsx.full.min.js"></script>
+    <script src="../js/jquery-1.12.4.min.js"></script>
 
     <script>
         let arr;
+        let x;
         $(document).ready(function(){
             $("#fileUploader").change(function(evt){
                 var selectedFile = evt.target.files[0];
@@ -34,7 +33,7 @@
                             //arr = JSON.stringify(XL_row_object);
                         }
                         arr=XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-                        jspreadsheet(document.getElementById('spreadsheet1'), {
+                        x=jspreadsheet(document.getElementById('spreadsheet1'), {
                             data:arr,
                             tableOverflow:true,
                             columns: [
@@ -53,7 +52,12 @@
                 //           
                 reader.readAsBinaryString(selectedFile);
             }); 
+            document.getElementById('download').onclick = function () {
+                x.download(); // 파일 이름 설정?
+            }
         });
+
+
         // 각종 
         var changed = function(instance, cell, x, y, value) {
         var cellName = jexcel.getColumnNameFromId([x,y]);

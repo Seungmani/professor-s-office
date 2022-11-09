@@ -6,13 +6,16 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
 
-<div id="spreadsheet1"></div>
+<div id="spreadsheet"></div>
 <input type="file" id="fileUploader" name="fileUploader" accept=".xls, .xlsx">
-<p><button id='download' onclick="down()">Export my spreadsheet as CSV</button></p>
+
+<p><button id='download'>Export my spreadsheet as CSV</button></p>
+<select name="data-select" id="data_select">
+
+</select>
 
 <button id="draw">draw</button>
-<canvas id="myChart" style="width:400; height:400;"></canvas>
-
+<canvas id="myChart" style="width:800; height:500;"></canvas>
 
 </br></br>
 JSON : <label id="jsonObject"> </label>
@@ -20,11 +23,15 @@ JSON : <label id="jsonObject"> </label>
 <script src="../../../../js-library/execl/xlsx.full.min.js"></script>
 <script src="../../../../js-library/jquery-1.12.4.min.js"></script>
 
+
+
 <script>
     let arr;
     let x;
     const arr_sec = [];
-    const arr_fir=[];
+    const arr_fir = [];
+    let arr_ex=[];
+    const $data=document.querySelector('#data_select');
     // let j;
     $(document).ready(function () {
         $("#fileUploader").change(function (evt) {
@@ -42,16 +49,21 @@ JSON : <label id="jsonObject"> </label>
                         // j= JSON.stringify(XL_row_object);
                     }
                     arr = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-                    x = jspreadsheet(document.getElementById('spreadsheet1'), {
+                    x = jspreadsheet(document.getElementById('spreadsheet'), {
                         data: arr,
                         tableOverflow: true,
                         columns: [
-
+                            //{title : 'dd',
+                            // name : 'dd',
+                            // witdh : '150px'}
                         ]
                     });
                     for (key in arr) {
                         arr_fir.push(Object.values(arr[key])[0]); // 첫 열
                         arr_sec[key] = Object.values(arr[key])[1]; // 두번째 열
+                    }
+                    for (var i = 0; i < Object.keys(arr[1]).length; i++) {
+                        data_select.innerHTML += "<Option value='select-column' id='select-column'>" + Object.keys(arr[0])[i] + "</option>";
                     }
                 })
             };
@@ -61,15 +73,27 @@ JSON : <label id="jsonObject"> </label>
             //           
             reader.readAsBinaryString(selectedFile);
         });
+
+
         document.getElementById('download').onclick = function () {
             x.download(); // 파일 이름 설정?
         }
 
+        // dropdown에서 열 추출
+        const onclick = function () {
+            console.log($data.options[$data.selectedIndex].textContent);
+            var name_column = $data.options[$data.selectedIndex].textContent;
+            console.log(arr);
+        };
+        $data.addEventListener('click', onclick);
+
+        // 그래프 그리기
         document.getElementById('draw').onclick = function () {
+            // x축 변수들
             const labels = [
                 arr_fir
             ];
-
+            // 데이터
             const data = {
                 labels: labels,
                 datasets: [{
@@ -77,20 +101,29 @@ JSON : <label id="jsonObject"> </label>
                     backgroundColor: 'rgb(255, 255,255)',
                     borderColor: 'rgb(255, 99, 132)',
                     data: arr_sec,
+                    fill: false,
                 }]
             };
-
-
+            // 설정 값
             const config = {
                 type: 'line',
                 data: data,
-                options: {}
+                options: {
+                    responsive: false,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    },
+                }
             };
-
+            // 그리기
             const myChart = new Chart(
-            document.getElementById('myChart'),
-            config
-      );
+                document.getElementById('myChart'),
+                config
+            );
         };
 
     });
@@ -163,7 +196,8 @@ JSON : <label id="jsonObject"> </label>
 
     var paste = function (data) {
         $('#log').append('Paste on the table ' + $(instance).prop('id') + '');
-    }        
+    }
+
 </script>
 
 </html>

@@ -15,7 +15,8 @@
 </select>
 
 <button id="draw">draw</button>
-<canvas id="myChart" style="width:800; height:500;"></canvas>
+<button id="add">add</button>
+<canvas id="myChart" style="width:400px; height:300px;"></canvas>
 
 </br></br>
 JSON : <label id="jsonObject"> </label>
@@ -27,10 +28,15 @@ JSON : <label id="jsonObject"> </label>
 
 <script>
     let arr; // json 데이터
-    const arr_y = []; // y축
+
+    let arr_y = []; // y축
     const arr_x = []; // x축 
+
     var $data = document.querySelector('#data_select');
-    let selected_column;
+    let selected_column; // select 태그에서 선택한 열 이름
+
+    var excel_col = []; // 열 이름
+    var draw_data = []; // chart 데이터
 
     $(document).ready(function () {
         $("#fileUploader").change(function (evt) {
@@ -48,22 +54,25 @@ JSON : <label id="jsonObject"> </label>
                     }
                     // json 데이터 정보
                     arr = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+
+                    // json 키값 저장
+                    for (var i = 0; i < Object.keys(arr[1]).length; i++) {
+                        // select box 데이터 추가
+                        data_select.innerHTML += "<Option value='select-column' id='select_column'>" + Object.keys(arr[0])[i] + "</option>";
+                        // 엑셀 열 제목 추가 및 열 크기 지정
+                        excel_col[i]=({ title: Object.keys(arr[0])[i], width: '150px' }) // "저장시간":"202206071700" 에서 저장시간 부분
+                    }
+
                     // excel 정보
                     jspreadsheet(document.getElementById('spreadsheet'), {
                         data: arr,
                         tableOverflow: true,
-                        columns: [
-                            //{title : 'dd',
-                            // name : 'dd',
-                            // witdh : '150px'}
-                        ]
+                        columns: excel_col
                     });
 
-                    for (var i = 0; i < Object.keys(arr[1]).length; i++) {
-                        data_select.innerHTML += "<Option value='select-column' id='select_column'>" + Object.keys(arr[0])[i] + "</option>";
-                    }
                 })
             };
+
             reader.onerror = function (event) {
                 console.error("File could not be read! Code " + event.target.error.code);
             };
@@ -76,46 +85,57 @@ JSON : <label id="jsonObject"> </label>
         }
     });
 
-    //dropdown에서 열 추출 및 x,y 축 값 설정
+    //dropdown에서 열 추출 및 y축 설정
     function Select() {
-        let i;
+        let k;
         arr = document.getElementById("jsonObject").textContent;
         // 선택된 열
         selected_column = $("#data_select option:selected").text()
-        console.log(selected_column);
+        // arr이 문자열이라 json으로
         arr = JSON.parse(arr);
+
         // 열 이름이 같을 때 i값 반환
-        for (i = 0; i < arr.length; i++) {
+        for (let i = 0; i < arr.length; i++) {
             if (Object.keys(arr[0])[i] === selected_column) {
+                k = i;
                 break;
             }
         }
         // x,y 값 
-        for (let j=0; j<arr.length; j++) {
-            arr_x[j]=(Object.values(arr[j])[0]); // x
-            arr_y[j]=(Object.values(arr[j])[i]); // y
+        for (len in arr) {
+            arr_x[len] = (Object.values(arr[len])[0]); // x "저장시간":"202206071700" 에서 202206071700 이부분
+            arr_y[len] = (Object.values(arr[len])[k]); // y
         }
+    }
+
+    document.querySelector('#add').onclick = function () {
+        // 그래프 색상
+        var RGB_1 = Math.floor(Math.random() * (255 + 1));
+        var RGB_2 = Math.floor(Math.random() * (255 + 1));
+        var RGB_3 = Math.floor(Math.random() * (255 + 1));
+
+        draw_data.push({
+            label: selected_column, // 데이터의 제목
+            borderColor: 'rgba(' + RGB_1 + ',' + RGB_2 + ',' + RGB_3 + ',0.3)', // 색상
+            data: arr_y, // 데이터
+        },)
+        console.log(draw_data);
     }
 
     // 그래프 그리기
     document.getElementById('draw').onclick = function () {
-
         // x축 변수들
         const labels = arr_x;
+
         // 데이터
         const data = {
             labels: labels,
-            datasets: [{
-                label: 'DATA',
-                borderColor: 'rgb(255, 99, 132)',
-                data: arr_y,
-                fill: true,
-            }]
+            datasets: draw_data,
         };
         // 설정 값
         const config = {
-            type: 'line',
-            data: data,
+            type: 'line', // 그래프 종류
+            data: data, // 데이터
             options: {
                 responsive: true,
                 diplay: 'auto',
@@ -131,10 +151,7 @@ JSON : <label id="jsonObject"> </label>
             }
         };
         // 그리기
-        const myChart = new Chart(
-            document.getElementById('myChart'),
-            config
-        );
+        const myChart = new Chart(document.getElementById('myChart'), config);
     };
 
     // 각종 엑셀 열, 행 관련 함수

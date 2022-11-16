@@ -10,7 +10,7 @@
 <input type="file" id="fileUploader" name="fileUploader" accept=".xls, .xlsx">
 
 <p><button id='download'>Export my spreadsheet as CSV</button></p>
-<select name="data-select" id="data_select" onclick="Select()">
+<select name="data-select" id="data_select" onclick="Select()" multiple size="4">
 
 </select>
 
@@ -82,6 +82,7 @@ JSON : <label id="jsonObject"> </label>
         arr = document.getElementById("jsonObject").textContent;
         // 선택된 열
         selected_column = $("#data_select option:selected").text()
+        console.log(selected_column);
         arr = JSON.parse(arr);
         // 열 이름이 같을 때 i값 반환
         for (i = 0; i < arr.length; i++) {

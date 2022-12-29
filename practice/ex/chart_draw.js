@@ -14,19 +14,31 @@ function Select() {
     // arr이 문자열이라 json으로
     arr = JSON.parse(arr);
 
-    for (i = 0; i < arr.length; i++) {
+    for (let i = 0; i < arr.length; i++) {
         if (Object.keys(arr[0])[i] === selected_column) {
             break;
         }
     }
 
-    // x,y 값 
+    // label을 가져옴 
     for (let j = 0; j < arr.length; j++) {
         arr_x[j] = (Object.values(arr[j])[0]); // x
-        //arr_y[j] = (Object.values(arr[j])[i]); // y축 분리?
     }
 }
 
+// 그래프 삭제
+document.querySelector('#delete').addEventListener('click',()=>{
+
+    draw_data.forEach((v,i)=>{
+        if(draw_data[i]['label'] === selected_column){
+            draw_data.splice(i,1);
+        }
+    });
+
+    draw_chart();
+});
+
+// 그래프 추가
 document.querySelector('#add').onclick = function () {
     // 그래프 색상
     let RGB_1 = Math.floor(Math.random() * (255 + 1));
@@ -38,11 +50,13 @@ document.querySelector('#add').onclick = function () {
         borderColor: 'rgba(' + RGB_1 + ',' + RGB_2 + ',' + RGB_3 + ',0.3)', // 색상
         data: arr.map(arr_y => arr_y[selected_column]), // 데이터
     },)
-    console.log(draw_data);
+
+    draw_chart();
 }
 
+
 // 그래프 그리기
-document.getElementById('draw').onclick = function () {
+const draw_chart = ()=> {
     // div 및 화살표 조정
     $('.grim').css('height', '500px');
     $('#down').css('display', 'none');
@@ -65,7 +79,7 @@ document.getElementById('draw').onclick = function () {
             diplay: 'auto',
             scales: {
                 xAxes: [{
-                    barThickness: 50,
+                    barThickness: 10,
                     gridLines: {
                         display: false
                     },
@@ -77,3 +91,36 @@ document.getElementById('draw').onclick = function () {
     // 그리기
     const myChart = new Chart(document.getElementById('myChart'), config);
 };
+
+// 그래프 초기화
+document.querySelector('#clear').addEventListener('click',() =>{
+    // 배열을 초기화 후 그리기
+    arr_x.splice(0);
+    draw_data.splice(0);
+
+    const labels = arr_x;
+
+    const data = {
+        labels: labels,
+        datasets: draw_data,
+    };
+
+    const config = {
+        type: 'line',
+        data: data,
+        options: {
+            responsive: false,
+            diplay: 'auto',
+            scales: {
+                xAxes: [{
+                    barThickness: 10,
+                    gridLines: {
+                        display: false
+                    },
+                    offset: true
+                }],
+            }
+        }
+    };
+    const myChart = new Chart(document.getElementById('myChart'), config);
+});

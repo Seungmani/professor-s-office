@@ -1,229 +1,55 @@
-<html>
-<script src="https://bossanova.uk/jspreadsheet/v4/jexcel.js"></script>
-<link rel="stylesheet" href="https://bossanova.uk/jspreadsheet/v4/jexcel.css" type="text/css" />
-<script src="https://jsuites.net/v4/jsuites.js"></script>
-<link rel="stylesheet" href="https://jsuites.net/v4/jsuites.css" type="text/css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+
+    <!-- css -->
+    <link rel="stylesheet" href="./ex.css">
+
+    <!-- fontawesome-->
+
+    <script src="https://kit.fontawesome.com/4c4b76e7c2.js" crossorigin="anonymous"></script>
+    <!-- spreadsheetjs -->
+    <script src="https://bossanova.uk/jspreadsheet/v4/jexcel.js"></script>
+    <link rel="stylesheet" href="https://bossanova.uk/jspreadsheet/v4/jexcel.css" type="text/css" />
+    <script src="https://jsuites.net/v4/jsuites.js"></script>
+    <link rel="stylesheet" href="https://jsuites.net/v4/jsuites.css" type="text/css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+
+</head>
+
+<body>
+    <div id="spreadsheet"></div>
+    <input type="file" id="fileUploader" name="fileUploader" accept=".xls, .xlsx">
+    <p><button id='download'>Export my spreadsheet as CSV</button></p>
 
 
-<div id="spreadsheet"></div>
-<input type="file" id="fileUploader" name="fileUploader" accept=".xls, .xlsx">
+    <select name="data-select" id="data_select" onclick="Select()" multiple size="4"></select>
 
-<p><button id='download'>Export my spreadsheet as CSV</button></p>
-<select name="data-select" id="data_select" onclick="Select()" multiple size="4">
+    <button id="add">추가</button>
+    <!-- <button id="draw">그리기</button> -->
+    <button id="delete">삭제</button>
+    <button id="clear">초기화</button>
+    
 
-</select>
+    <div id="grim" class="grim">
+        <a href="#"><i id="up" class="fa-solid fa-arrow-up" style="display: none;" onclick="grim_ud()"></i></i></a>
+        <a href="#"><i id="down" class="fa-sharp fa-solid fa-arrow-down" onclick="grim_ud()"></i></a>
+        <canvas id="myChart" style="width : 500px; height : 300px; box-sizing: border-box;"></canvas>
+    </div>
 
-<button id="draw">draw</button>
-<button id="add">add</button>
-<canvas id="myChart" style="width:400px; height:300px;"></canvas>
+    <label id="jsonObject" style="display:none"> </label>
 
-</br></br>
-JSON : <label id="jsonObject"> </label>
-
-<script src="../../../../js-library/execl/xlsx.full.min.js"></script>
-<script src="../../../../js-library/jquery-1.12.4.min.js"></script>
-
-
-
-<script>
-    let arr; // json 데이터
-
-    let arr_y = []; // y축
-    const arr_x = []; // x축 
-
-    var $data = document.querySelector('#data_select');
-    let selected_column; // select 태그에서 선택한 열 이름
-
-    var excel_col = []; // 열 이름
-    var draw_data = []; // chart 데이터
-
-    $(document).ready(function () {
-        $("#fileUploader").change(function (evt) {
-            var selectedFile = evt.target.files[0];
-            var reader = new FileReader();
-            reader.onload = function (event) {
-                var data = event.target.result;
-                var workbook = XLSX.read(data, {
-                    type: 'binary'
-                });
-                workbook.SheetNames.forEach(function (sheetName) {
-                    var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-                    if (XL_row_object.length > 0) {
-                        document.getElementById("jsonObject").innerHTML = JSON.stringify(XL_row_object);
-                    }
-                    // json 데이터 정보
-                    arr = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-
-                    // json 키값 저장
-                    for (var i = 0; i < Object.keys(arr[1]).length; i++) {
-                        // select box 데이터 추가
-                        data_select.innerHTML += "<Option value='select-column' id='select_column'>" + Object.keys(arr[0])[i] + "</option>";
-                        // 엑셀 열 제목 추가 및 열 크기 지정
-                        excel_col[i]=({ title: Object.keys(arr[0])[i], width: '150px' }) // "저장시간":"202206071700" 에서 저장시간 부분
-                    }
-
-                    // excel 정보
-                    jspreadsheet(document.getElementById('spreadsheet'), {
-                        data: arr,
-                        tableOverflow: true,
-                        columns: excel_col
-                    });
-
-                })
-            };
-
-            reader.onerror = function (event) {
-                console.error("File could not be read! Code " + event.target.error.code);
-            };
-            //           
-            reader.readAsBinaryString(selectedFile);
-        });
-
-        document.getElementById('download').onclick = function () {
-            x.download(); // 파일 이름 설정?
-        }
-    });
-
-    //dropdown에서 열 추출 및 y축 설정
-    function Select() {
-        let k;
-        arr = document.getElementById("jsonObject").textContent;
-        // 선택된 열
-        selected_column = $("#data_select option:selected").text()
-        // arr이 문자열이라 json으로
-        arr = JSON.parse(arr);
-
-        // 열 이름이 같을 때 i값 반환
-        for (let i = 0; i < arr.length; i++) {
-            if (Object.keys(arr[0])[i] === selected_column) {
-                k = i;
-                break;
-            }
-        }
-        // x,y 값 
-        for (len in arr) {
-            arr_x[len] = (Object.values(arr[len])[0]); // x "저장시간":"202206071700" 에서 202206071700 이부분
-            arr_y[len] = (Object.values(arr[len])[k]); // y
-        }
-    }
-
-    document.querySelector('#add').onclick = function () {
-        // 그래프 색상
-        var RGB_1 = Math.floor(Math.random() * (255 + 1));
-        var RGB_2 = Math.floor(Math.random() * (255 + 1));
-        var RGB_3 = Math.floor(Math.random() * (255 + 1));
-
-        draw_data.push({
-            label: selected_column, // 데이터의 제목
-            borderColor: 'rgba(' + RGB_1 + ',' + RGB_2 + ',' + RGB_3 + ',0.3)', // 색상
-            data: arr_y, // 데이터
-        },)
-        console.log(draw_data);
-    }
-
-    // 그래프 그리기
-    document.getElementById('draw').onclick = function () {
-        // x축 변수들
-        const labels = arr_x;
-
-        // 데이터
-        const data = {
-            labels: labels,
-            datasets: draw_data,
-        };
-        // 설정 값
-        const config = {
-            type: 'line', // 그래프 종류
-            data: data, // 데이터
-            options: {
-                responsive: true,
-                diplay: 'auto',
-                scales: {
-                    xAxes: [{
-                        barThickness: 50,
-                        gridLines: {
-                            display: false
-                        },
-                        offset: true
-                    }],
-                }
-            }
-        };
-        // 그리기
-        const myChart = new Chart(document.getElementById('myChart'), config);
-    };
-
-    // 각종 엑셀 열, 행 관련 함수
-    var changed = function (instance, cell, x, y, value) {
-        var cellName = jexcel.getColumnNameFromId([x, y]);
-        $('#log').append('New change on cell ' + cellName + ' to: ' + value + '');
-    }
-
-    var beforeChange = function (instance, cell, x, y, value) {
-        var cellName = jexcel.getColumnNameFromId([x, y]);
-        $('#log').append('The cell ' + cellName + ' will be changed');
-    }
-
-    var insertedRow = function (instance) {
-        $('#log').append('Row added');
-    }
-
-    var insertedColumn = function (instance) {
-        $('#log').append('Column added');
-    }
-
-    var deletedRow = function (instance) {
-        $('#log').append('Row deleted');
-    }
-
-    var deletedColumn = function (instance) {
-        $('#log').append('Column deleted');
-    }
-
-    var sort = function (instance, cellNum, order) {
-        var order = (order) ? 'desc' : 'asc';
-        $('#log').append('The column  ' + cellNum + ' sorted by ' + order + '');
-    }
-
-    var resizeColumn = function (instance, cell, width) {
-        $('#log').append('The column  ' + cell + ' resized to width ' + width + ' px');
-    }
-
-    var resizeRow = function (instance, cell, height) {
-        $('#log').append('The row  ' + cell + ' resized to height ' + height + ' px');
-    }
-
-    var selectionActive = function (instance, x1, y1, x2, y2, origin) {
-        var cellName1 = jexcel.getColumnNameFromId([x1, y1]);
-        var cellName2 = jexcel.getColumnNameFromId([x2, y2]);
-        $('#log').append('The selection from ' + cellName1 + ' to ' + cellName2 + '');
-    }
-
-    var loaded = function (instance) {
-        $('#log').append('New data is loaded');
-    }
-
-    var moveRow = function (instance, from, to) {
-        $('#log').append('The row ' + from + ' was move to the position of ' + to + ' ');
-    }
-
-    var moveColumn = function (instance, from, to) {
-        $('#log').append('The col ' + from + ' was move to the position of ' + to + ' ');
-    }
-
-    var blur = function (instance) {
-        $('#log').append('The table ' + $(instance).prop('id') + ' is blur');
-    }
-
-    var focus = function (instance) {
-        $('#log').append('The table ' + $(instance).prop('id') + ' is focus');
-    }
-
-    var paste = function (data) {
-        $('#log').append('Paste on the table ' + $(instance).prop('id') + '');
-    }
-
-</script>
+    <!-- js -->
+    <script src="../../../../js-library/execl/xlsx.full.min.js"></script>
+    <script src="./jquery-1.12.4.min.js"></script>
+    <script src="./chart_draw.js"></script>
+    <script src="./excel.js"></script>
+    <script src="./div.js"></script>
+</body>
 
 </html>

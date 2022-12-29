@@ -1,28 +1,52 @@
-<html>
-<script src="https://bossanova.uk/jspreadsheet/v4/jexcel.js"></script>
-<link rel="stylesheet" href="https://bossanova.uk/jspreadsheet/v4/jexcel.css" type="text/css" />
-<script src="https://jsuites.net/v4/jsuites.js"></script>
-<link rel="stylesheet" href="https://jsuites.net/v4/jsuites.css" type="text/css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<!DOCTYPE html>
+<html lang="ko">
 
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
 
-<div id="spreadsheet"></div>
-<input type="file" id="fileUploader" name="fileUploader" accept=".xls, .xlsx">
+    <!-- css -->
+    <link rel="stylesheet" href="../css/ex.css">
 
-<p><button id='download'>Export my spreadsheet as CSV</button></p>
-<select name="data-select" id="data_select" onclick="Select()" multiple size="4">
+    <!-- fontawesome-->
+    <script src="https://kit.fontawesome.com/4c4b76e7c2.js" crossorigin="anonymous"></script>
 
-</select>
+    <!-- spreadsheetjs -->
+    <script src="https://bossanova.uk/jspreadsheet/v4/jexcel.js"></script>
+    <link rel="stylesheet" href="https://bossanova.uk/jspreadsheet/v4/jexcel.css" type="text/css" />
+    <script src="https://jsuites.net/v4/jsuites.js"></script>
+    <link rel="stylesheet" href="https://jsuites.net/v4/jsuites.css" type="text/css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
-<button id="draw">draw</button>
-<canvas id="myChart" style="width:800; height:500;"></canvas>
+</head>
 
-</br></br>
-JSON : <label id="jsonObject"> </label>
+<body>
+    <div id="spreadsheet"></div>
+    <input type="file" id="fileUploader" name="fileUploader" accept=".xls, .xlsx">
 
-<script src="../js/xlsx.full.min.js"></script>
-<script src="../js/jquery-1.12.4.min.js"></script>
-<script src="../js/chart_draw.js"></script>
-<script src="../js/excel.js"></script>
+    <p><button id='download'>Export my spreadsheet as CSV</button></p>
+    <select name="data-select" id="data_select" onclick="Select()" multiple size="4">
+
+    </select>
+    <button id="draw">draw</button>
+    <button id="add">add</button>
+
+    <div id="grim" class="grim">
+        <a href="#"><i id="up" class="fa-solid fa-arrow-up" style="display: none;" onclick="grim_ud()"></i></i></a>
+        <a href="#"><i id="down" class="fa-sharp fa-solid fa-arrow-down" onclick="grim_ud()"></i></a>
+        <canvas id="myChart" style="width : 500px; height : 300px; box-sizing: border-box;"></canvas>
+    </div>
+
+    <label id="jsonObject" style="display:none"> </label>
+
+    <!-- js -->
+    <script src="../js/xlsx.full.min.js"></script>
+    <script src="../js/jquery-1.12.4.min.js"></script>
+    <script src="../js/chart_draw.js"></script>
+    <script src="../js/excel.js"></script>
+    <script src="../js/div.js"></script>
+</body>
 
 </html>

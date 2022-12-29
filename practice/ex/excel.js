@@ -17,7 +17,8 @@ $(document).ready(function () {
                 }
                 // json 데이터 정보
                 arr = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-                excel_col = []; // 새로운 데이터를 불러오면 title을 초기화
+                excel_col=[]; // 새로운 데이터를 불러오면 title을 초기화
+                
                 // json 키값 저장
                 for (let i = 0; i < Object.keys(arr[1]).length; i++) {
                     // select box 데이터 추가

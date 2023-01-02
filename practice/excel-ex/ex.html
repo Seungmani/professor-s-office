@@ -19,7 +19,6 @@
     <script src="https://jsuites.net/v4/jsuites.js"></script>
     <link rel="stylesheet" href="https://jsuites.net/v4/jsuites.css" type="text/css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-
 </head>
 
 <body>
@@ -27,21 +26,39 @@
     <input type="file" id="fileUploader" name="fileUploader" accept=".xls, .xlsx">
     <p><button id='download'>Export my spreadsheet as CSV</button></p>
 
-
     <select name="data-select" id="data_select" onclick="Select()" multiple size="4"></select>
 
-    <button id="add">추가</button>
-    <!-- <button id="draw">그리기</button> -->
-    <button id="delete">삭제</button>
-    <button id="clear">초기화</button>
-    
-
-    <div id="grim" class="grim">
-        <a href="#"><i id="up" class="fa-solid fa-arrow-up" style="display: none;" onclick="grim_ud()"></i></i></a>
-        <a href="#"><i id="down" class="fa-sharp fa-solid fa-arrow-down" onclick="grim_ud()"></i></a>
-        <canvas id="myChart" style="width : 500px; height : 300px; box-sizing: border-box;"></canvas>
-    </div>
-
+    <div class="container">
+        <div class="header" id="header">
+            <ul id="listset" class="listset">
+                <a href="#" id="list1"><li>1</li></a>
+                <a href="#" id="list2"><li>2</li></a>
+                <a href="#" id="list3"><li>3</li></a>
+                <a href="#" id="list4"><li>4</li></a>
+            </ul>
+        </div>
+        <div class="content">
+            <div class="ex1" id="ex1">
+                <button id="x-axis">x축</button>
+                <button id="add">y축</button>
+                <!-- <button id="draw">그리기</button> -->
+                <button id="delete">삭제</button>
+                <button id="clear">초기화</button>
+                <div id="grim" class="grim">
+                    <canvas id="myChart" style="width : 500px; height : 300px; box-sizing: border-box;"></canvas>
+                </div>        
+            </div>
+            <div class="ex2" id="ex2">
+                <!--여기다가 넣기-->
+            </div>
+            <div class="ex3" id="ex3">
+                <!--여기다가 넣기-->
+            </div>
+            <div class="ex4" id="ex4">
+                <!--여기다가 넣기-->
+            </div>
+        </div>
+    </div>   
     <label id="jsonObject" style="display:none"> </label>
 
     <!-- js -->
@@ -49,7 +66,8 @@
     <script src="./jquery-1.12.4.min.js"></script>
     <script src="./chart_draw.js"></script>
     <script src="./excel.js"></script>
-    <script src="./div.js"></script>
+    <!--<script src="./div.js"></script>-->
+    <script src="./page.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,93 @@
+ul,li {
+    list-style : none;
+}
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+a{
+    text-decoration: none;
+    color : #000;
+}
+
+.fixed{
+    width: 700px;
+    height: 150px;
+    border: 1px solid #000;
+    margin-left: 30px;
+}
+
+.container{
+    margin: 30px;
+    width: 700px;
+    height: 500px;
+}
+
+.container .header{
+    width: 700px;
+    height: 30px;
+}
+
+.header ul{
+    float: left;
+    display: flex;
+}
+
+.header ul a{
+    padding: 0 20px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    border-top : 1px solid #000;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.header ul #list1{
+    background-color: blue;
+    color: white;
+}
+
+.container .content{
+    position: relative;
+    width: 700px;
+    height: 470px;
+    border: 1px solid #000;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.content div{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+.content .ex2,
+.content .ex3,
+.content .ex4{
+    display: none;
+}
+
+.content .ex1 .grim{
+    position: relative;
+    margin-top: 30px;
+    width : 70%;
+    height: 30px;
+    
+    border: 1px solid #000;
+    border-radius: 10px;
+}
+
+.content .ex1.grim i{
+    width : 20px;
+    height : 20px;
+    position: absolute;
+    top : 5px;
+    right:10px;
+}

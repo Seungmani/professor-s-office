@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,37 +9,47 @@
 
     <link rel="stylesheet" href="./page.css">
 </head>
+
 <body>
-    <div class="fixed">
-        <select name="data-select" id="data_select" onclick="Select()" multiple size="4"></select>
-    </div>
-    <div class="container">
-        <div class="header" id="header">
-            <ul id="listset" class="listset">
-                <a href="#" id="list1"><li>1</li></a>
-                <a href="#" id="list2"><li>2</li></a>
-                <a href="#" id="list3"><li>3</li></a>
-                <a href="#" id="list4"><li>4</li></a>
-            </ul>
+    <div id="spreadsheet"></div>
+    <input type="file" id="fileUploader" name="fileUploader" accept=".xls, .xlsx">
+    <p><button id='download'>Export my spreadsheet as CSV</button></p>
+
+    <select name="data-select" id="data_select" onclick="Select()" multiple size="4"></select>
+
+    <div class="main">
+        <input type="radio" id="tab-1" name="show" checked />
+        <input type="radio" id="tab-2" name="show" />
+        <input type="radio" id="tab-3" name="show" />
+        <input type="radio" id="tab-4" name="show" />
+        <div class="tab">
+            <label for="tab-1">Concept</label>
+            <label for="tab-2">Color</label>
+            <label for="tab-3">Textile</label>
+            <label for="tab-4">Design</label>
         </div>
         <div class="content">
-            <div class="ex1" id="ex1">
-                <button id="add">추가</button>
+            <div class="content-dis">
+                <button id="x-axis">x축</button>
+                <button id="add">y축</button>
                 <!-- <button id="draw">그리기</button> -->
                 <button id="delete">삭제</button>
                 <button id="clear">초기화</button>
                 <div id="grim" class="grim">
-                    <a href="#"><i id="up" class="fa-solid fa-arrow-up" style="display: none;" onclick="grim_ud()"></i></i></a>
-                    <a href="#"><i id="down" class="fa-sharp fa-solid fa-arrow-down" onclick="grim_ud()"></i></a>
                     <canvas id="myChart" style="width : 500px; height : 300px; box-sizing: border-box;"></canvas>
                 </div>        
             </div>
-            <div class="ex2" id="ex2">dd</div>
-            <div class="ex3" id="ex3">cc</div>
-            <div class="ex4" id="ex4">dd</div>
+            <div class="content-dis">
+                Color의 body안 내용을 넣으세요.
+            </div>
+            <div class="content-dis">
+                Textile의 body안 내용을 넣으세요.
+            </div>
+            <div class="content-dis">
+                Design의 body안 내용을 넣으세요.
+            </div>
         </div>
     </div>
-     
 </body>
-<script src="./page.js"></script>
+
 </html>
